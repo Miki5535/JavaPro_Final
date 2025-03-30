@@ -5,10 +5,12 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
@@ -33,19 +35,20 @@ public class Toolbars {
     public JPanel createTopToolbar() {
         JPanel toolbar = new JPanel(new FlowLayout(FlowLayout.LEFT));
         
-        toolbar.add(createToolButton("Pencil", "pencil", "brush"));
-        toolbar.add(createToolButton("Eraser", "eraser", "eraser"));
-        toolbar.add(createToolButton("Line", "line", "brush"));
-        toolbar.add(createToolButton("Rectangle", "rectangle", "brush"));
-        toolbar.add(createToolButton("Triangle", "triangle", "brush"));
-        toolbar.add(createToolButton("Circle", "circle", "brush"));
-        toolbar.add(createToolButton("Ellipse", "ellipse", "brush"));
-        toolbar.add(createToolButton("Polygon", "polygon", "sides"));
-        toolbar.add(createToolButton("Spray", "spray", "spray"));
-        toolbar.add(createToolButton("Text", "text", "text"));
-        toolbar.add(createToolButton("Fill", "fill", "empty"));
+        toolbar.add(createToolButton("resources/pencil.png", "pencil", "brush"));
+        toolbar.add(createToolButton("resources/eraser.png", "eraser", "eraser"));
+        toolbar.add(createToolButton("resources/line.png", "line", "brush"));
+        toolbar.add(createToolButton("resources/rectangle.png", "rectangle", "brush"));
+        toolbar.add(createToolButton("resources/triangle.png", "triangle", "brush"));
+        toolbar.add(createToolButton("resources/circle.png", "circle", "brush"));
+        toolbar.add(createToolButton("resources/ellipse.png", "ellipse", "brush"));
+        toolbar.add(createToolButton("resources/polygon.png", "polygon", "sides"));
+        toolbar.add(createToolButton("resources/spray.png", "spray", "spray"));
+        toolbar.add(createToolButton("resources/text.png", "text", "text"));
+        toolbar.add(createToolButton("resources/fill.png", "fill", "empty"));
         
-        JButton primaryColorBtn = new JButton("Primary Color");
+        JButton primaryColorBtn = new JButton(new ImageIcon(new ImageIcon("resources/color.png")
+                .getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH)));
         primaryColorBtn.addActionListener(e -> {
             Color c = JColorChooser.showDialog(null, "Choose Primary Color", drawingPanel.getCurrentColor());
             if (c != null) drawingPanel.setCurrentColor(c);
@@ -103,19 +106,7 @@ public class Toolbars {
         toolbar.add(shapePanel);
         toolbar.add(Box.createVerticalStrut(20));
         
-        // Layer Controls
-        JPanel layerPanel = new JPanel(new GridLayout(0, 1, 5, 5));
-        layerPanel.setBorder(BorderFactory.createTitledBorder("Layer Controls"));
-        
-        JButton bringToFrontBtn = new JButton("Bring to Front");
-        bringToFrontBtn.addActionListener(e -> drawingPanel.bringToFront());
-        layerPanel.add(bringToFrontBtn);
-        
-        JButton sendToBackBtn = new JButton("Send to Back");
-        sendToBackBtn.addActionListener(e -> drawingPanel.sendToBack());
-        layerPanel.add(sendToBackBtn);
-        
-        toolbar.add(layerPanel);
+       
         
         return toolbar;
     }
@@ -191,7 +182,9 @@ public class Toolbars {
     }
 
     private JButton createToolButton(String text, String toolName, String panelToShow) {
-        JButton button = new JButton(text);
+//        JButton button = new JButton(text);
+    	JButton button = new JButton(new ImageIcon(new ImageIcon(text)
+                .getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH)));
         button.addActionListener(e -> {
             drawingPanel.setCurrentTool(toolName);
             if (cardLayout != null && sliderPanel != null) {
